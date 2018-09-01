@@ -100,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext()," node decrpyted with data :"+node.data +" and node number is "+node.nodeNumber,Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"Try again",Toast.LENGTH_LONG).show();
+
         }
 
     }
@@ -111,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext()," node encrypted with data :"+node.data +" and node number is "+node.nodeNumber,Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"Try again",Toast.LENGTH_LONG).show();
         }
 
     }
