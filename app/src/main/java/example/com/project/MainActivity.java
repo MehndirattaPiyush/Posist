@@ -79,19 +79,17 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void onClick(View view){
-        switch (view.getId()){
-            case R.id.add_child :
-                addIfPossible(parEt.getText().toString() , valEt.getText().toString() );
-                break;
-            case R.id.encrypt :
-                encrypt(parEt.getText().toString());
-                break;
-            case R.id.decrypt :
-                dencrypt(parEt.getText().toString());
-                break;
+    public void addChild(View view){
 
-        }
+                addIfPossible(parEt.getText().toString() , valEt.getText().toString() );
+
+
+    }
+    public void encrypt(View view){
+        encrypt(parEt.getText().toString());
+    }
+    public void decrypt(View view){
+        dencrypt(parEt.getText().toString());
     }
 
     private void dencrypt(String s) {

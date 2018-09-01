@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="Add child node"
             android:id="@+id/add_child"
-            android:onClick="onClick"/>
+            android:onClick="addChild"/>
         <EditText
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -39,12 +39,12 @@
         android:layout_height="wrap_content"
         android:text="Encrypt"
         android:id="@+id/encrypt"
-        android:onClick="onClick"/>
+        android:onClick="encrypt"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Decrypt"
         android:id="@+id/decrypt"
-        android:onClick="onClick"/>
+        android:onClick="decrypt"/>
 
 </LinearLayout>
