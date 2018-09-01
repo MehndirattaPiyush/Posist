@@ -12,8 +12,12 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.ArrayList;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public static String genesisNodeRef = null ;
     public ArrayList<Node> nodes = new ArrayList<>();
 
+    SecretKey secretKey;
     EditText parEt;
     EditText valEt;
     @Override
@@ -41,6 +46,16 @@ public class MainActivity extends AppCompatActivity {
                 nodes.add(node);
             }
         });
+
+        KeyGenerator keyGenerator = null;
+        try {
+            keyGenerator = KeyGenerator.getInstance("DESede");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        // keysize must be equal to 112 or 168 for this provider
+        keyGenerator.init(168);
+        secretKey = keyGenerator.generateKey();
     }
 
     @Override
@@ -70,14 +85,38 @@ public class MainActivity extends AppCompatActivity {
                 addIfPossible(parEt.getText().toString() , valEt.getText().toString() );
                 break;
             case R.id.encrypt :
-
+                encrypt(parEt.getText().toString());
                 break;
             case R.id.decrypt :
-
+                dencrypt(parEt.getText().toString());
                 break;
 
         }
     }
+
+    private void dencrypt(String s) {
+        Node node = nodes.get(Integer.parseInt(s));
+
+        try {
+            node.data = Encryption.decrypt(node.data.getBytes(),secretKey).toString();
+            Toast.makeText(getApplicationContext()," node decrpyted with data :"+node.data +" and node number is "+node.nodeNumber,Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void encrypt(String s) {
+        Node node = nodes.get(Integer.parseInt(s));
+
+        try {
+            node.data = Encryption.encrypt(node.data.getBytes(),secretKey).toString();
+            Toast.makeText(getApplicationContext()," node encrypted with data :"+node.data +" and node number is "+node.nodeNumber,Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void addIfPossible(String nodeNumber , String data){
         if(Integer.parseInt(nodes.get(Integer.parseInt(nodeNumber)).data) - getSumChild(nodes.get(Integer.parseInt(nodeNumber))) > Integer.parseInt(data)){
             Node node = new Node(data , nodeNumber);
@@ -101,4 +140,5 @@ public class MainActivity extends AppCompatActivity {
 
         return sum;
     }
+
 }
